@@ -1,0 +1,13 @@
+package com.ces.slc.workshop;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class StranglerFigWorkshopApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(StranglerFigWorkshopApplication.class, args);
+    }
+
+}
