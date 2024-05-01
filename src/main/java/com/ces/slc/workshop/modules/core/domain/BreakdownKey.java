@@ -31,8 +31,8 @@ public class BreakdownKey {
 
     private String description;
 
-    protected BreakdownKey() {
-        // For JPA
+    public BreakdownKey() {
+        // For JPA and MapStruct
     }
 
     public BreakdownKey(String name, BreakdownStructure structure) {

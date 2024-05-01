@@ -1,4 +1,4 @@
-package com.ces.slc.workshop.modules.core.application;
+package com.ces.slc.workshop.modules.core.application.breakdown;
 
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
