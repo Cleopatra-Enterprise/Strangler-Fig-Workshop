@@ -21,10 +21,10 @@ public class KnowledgebaseLevel {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    KnowledgebaseLevel parent;
+    private KnowledgebaseLevel parent;
 
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, orphanRemoval = true)
-    Set<KnowledgebaseLevel> children = new HashSet<>();
+    private Set<KnowledgebaseLevel> children = new HashSet<>();
 
     protected KnowledgebaseLevel() {
         // For JPA
