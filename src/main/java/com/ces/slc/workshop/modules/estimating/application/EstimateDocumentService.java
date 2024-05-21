@@ -2,6 +2,7 @@ package com.ces.slc.workshop.modules.estimating.application;
 
 import java.time.LocalDateTime;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.ces.slc.workshop.modules.core.application.breakdown.BreakdownStructureService;
@@ -22,12 +23,11 @@ public class EstimateDocumentService extends AbstractDocumentService<EstimateDoc
     }
 
     @Override
+    @PreAuthorize("isAuthenticated()")
     protected EstimateDocument createNewDocument(DocumentDto documentDto) {
-        String author = documentDto.author();
-        // TODO: Resolve user from author, or from current security context
-        User user = null;
-        EstimateDocument estimateDocument = new EstimateDocument(documentDto.description(), user, LocalDateTime.now());
-        estimateDocument.setName(documentDto.name());
+        User user = getCurrentUser();
+        EstimateDocument estimateDocument = new EstimateDocument(documentDto.name(), user, LocalDateTime.now());
+        estimateDocument.setDescription(documentDto.description());
         return estimateDocument;
     }
 

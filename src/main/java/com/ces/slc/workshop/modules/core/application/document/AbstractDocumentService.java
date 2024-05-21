@@ -5,6 +5,9 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.ces.slc.workshop.modules.core.application.breakdown.BreakdownStructureService;
 import com.ces.slc.workshop.modules.core.domain.BreakdownStructure;
@@ -12,6 +15,8 @@ import com.ces.slc.workshop.modules.core.domain.Document;
 import com.ces.slc.workshop.modules.core.domain.DocumentComponent;
 import com.ces.slc.workshop.modules.core.web.dto.BreakdownStructureDto;
 import com.ces.slc.workshop.modules.core.web.dto.DocumentDto;
+import com.ces.slc.workshop.security.domain.CustomUserDetails;
+import com.ces.slc.workshop.security.domain.User;
 
 import jakarta.transaction.Transactional;
 
@@ -110,5 +115,17 @@ public abstract class AbstractDocumentService<D extends Document<C>, C extends D
                     return false;
                 })
                 .orElse(false);
+    }
+
+    protected User getCurrentUser() {
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof CustomUserDetails userDetails) {
+            return userDetails.user();
+        }
+        else {
+            throw new IllegalStateException("Could not resolve user from security context");
+        }
     }
 }
