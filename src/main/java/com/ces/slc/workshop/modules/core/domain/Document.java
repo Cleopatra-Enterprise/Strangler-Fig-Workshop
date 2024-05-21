@@ -15,21 +15,17 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrePersist;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Document<C extends DocumentComponent> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
 
     @ManyToOne
     private User author;
-
-    @OneToMany(mappedBy = "document", orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<C> topLevelComponents = new HashSet<>();
 
     @OneToMany(mappedBy = "document", orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<BreakdownStructure> breakdownStructures = new HashSet<>();
@@ -56,17 +52,11 @@ public abstract class Document<C extends DocumentComponent> {
         return author;
     }
 
-    public Set<C> getTopLevelComponents() {
-        return topLevelComponents;
-    }
+    public abstract Set<C> getTopLevelComponents();
 
-    public void addTopLevelComponent(C component) {
-        topLevelComponents.add(component);
-    }
+    public abstract void addTopLevelComponent(C component);
 
-    public void removeTopLevelComponent(C component) {
-        topLevelComponents.remove(component);
-    }
+    public abstract void removeTopLevelComponent(C component);
 
     public Set<BreakdownStructure> getBreakdownStructures() {
         return breakdownStructures;
@@ -103,7 +93,4 @@ public abstract class Document<C extends DocumentComponent> {
     public void setCreationTimestamp(LocalDateTime creationTimestamp) {
         this.creationTimestamp = creationTimestamp;
     }
-
-    @PrePersist
-    protected abstract void initialize();
 }

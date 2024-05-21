@@ -19,7 +19,7 @@ import jakarta.persistence.ManyToOne;
 public abstract class DocumentComponent {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
