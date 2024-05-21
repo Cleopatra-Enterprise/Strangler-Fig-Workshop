@@ -7,7 +7,7 @@ import com.ces.slc.workshop.modules.core.domain.BreakdownStructure;
 import com.ces.slc.workshop.modules.core.web.dto.BreakdownKeyDto;
 import com.ces.slc.workshop.modules.core.web.dto.BreakdownStructureDto;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface BreakdownStructureMapper {
 
     BreakdownStructureDto toStructureDto(BreakdownStructure breakdownStructure);

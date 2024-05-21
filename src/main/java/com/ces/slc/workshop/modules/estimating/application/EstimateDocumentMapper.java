@@ -8,7 +8,9 @@ import com.ces.slc.workshop.modules.estimating.domain.EstimateDocument;
 import com.ces.slc.workshop.modules.estimating.web.dto.EstimateComponentDto;
 import com.ces.slc.workshop.modules.estimating.web.dto.EstimateDocumentDto;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface EstimateDocumentMapper extends DocumentMapper<
         EstimateDocument, EstimateComponent,
-        EstimateDocumentDto, EstimateComponentDto> { }
+        EstimateDocumentDto, EstimateComponentDto> {
+
+}
