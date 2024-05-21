@@ -1,11 +1,11 @@
 package com.ces.slc.workshop.modules.core.web.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.ces.slc.workshop.modules.core.application.breakdown.BreakdownStructureMapper;
 import com.ces.slc.workshop.modules.core.application.breakdown.BreakdownStructureService;
@@ -13,7 +13,7 @@ import com.ces.slc.workshop.modules.core.web.dto.BreakdownKeyDto;
 import com.ces.slc.workshop.modules.core.web.dto.BreakdownStructureDto;
 import com.ces.slc.workshop.support.ResponseEntityUtils;
 
-@Controller
+@RestController
 @RequestMapping("/breakdown/structure")
 public class BreakdownStructureController {
 

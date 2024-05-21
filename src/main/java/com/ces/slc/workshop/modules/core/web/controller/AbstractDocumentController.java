@@ -45,7 +45,7 @@ public abstract class AbstractDocumentController<D extends Document<C>, C extend
         this.specificationBuilder = specificationBuilder;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<DocumentMetadataDto> getAllDocuments() {
         return documentService.getAllDocuments().stream()
                 .map(documentMapper::toMetadataDto)
@@ -60,7 +60,7 @@ public abstract class AbstractDocumentController<D extends Document<C>, C extend
         );
     }
 
-    @PostMapping("/")
+    @PostMapping
     public DocumentDto createDocument(@RequestBody T documentDto) {
         return documentMapper.toDocumentDto(documentService.createDocument(documentDto));
     }

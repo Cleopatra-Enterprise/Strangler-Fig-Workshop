@@ -1,7 +1,7 @@
 package com.ces.slc.workshop.modules.estimating.web.controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.ces.slc.workshop.modules.core.application.breakdown.BreakdownStructureMapper;
 import com.ces.slc.workshop.modules.core.application.document.DocumentComponentSpecificationBuilder;
@@ -12,7 +12,7 @@ import com.ces.slc.workshop.modules.estimating.domain.EstimateComponent;
 import com.ces.slc.workshop.modules.estimating.domain.EstimateDocument;
 import com.ces.slc.workshop.modules.estimating.web.dto.EstimateDocumentDto;
 
-@Controller
+@RestController
 @RequestMapping("/estimate")
 public class EstimateDocumentController extends AbstractDocumentController<EstimateDocument, EstimateComponent, EstimateDocumentDto> {
 
