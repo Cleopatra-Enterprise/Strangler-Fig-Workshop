@@ -1,45 +1,55 @@
 package com.ces.slc.workshop.security.web.configuration;
 
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.ces.slc.workshop.security.application.CustomUserDetailsService;
+import com.ces.slc.workshop.security.application.UserRepository;
 
 @Configuration
-public class BasicSecurityConfiguration {
-
-    @Value("${cleopatra.admin.username}")
-    private String adminUsername;
-
-    @Value("${cleopatra.admin.password}")
-    private String adminPassword;
+public class BasicSecurityConfiguration implements WebMvcConfigurer {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.httpBasic(Customizer.withDefaults())
+        return http
+                .httpBasic(Customizer.withDefaults())
+                // TODO: Restrict to authenticated users
+                .authorizeHttpRequests(requests -> requests.anyRequest().permitAll())
+                .csrf(AbstractHttpConfigurer::disable)
                 .build();
     }
 
-    @Bean
-    public UserDetailsManager userDetailsManager(DataSource dataSource) {
-        JdbcUserDetailsManager manager = new JdbcUserDetailsManager(dataSource);
-        if (!manager.userExists(adminUsername)) {
-            UserDetails defaultAdminUser = User.builder()
-                    .username(adminUsername)
-                    .password(adminPassword)
-                    .roles("ADMIN")
-                    .build();
-            manager.createUser(defaultAdminUser);
-        }
-        return manager;
+    @Override
+    public void configurePathMatch(PathMatchConfigurer configurer) {
+        configurer.setUseTrailingSlashMatch(true);
     }
 
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+
+        return authProvider;
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService(UserRepository userRepository) {
+        return new CustomUserDetailsService(userRepository);
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }
