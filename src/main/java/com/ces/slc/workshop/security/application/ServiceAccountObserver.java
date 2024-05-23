@@ -39,7 +39,7 @@ public class ServiceAccountObserver {
     }
 
     private void createServiceAccount() {
-        userRepository.save(new User(username, password));
+        userRepository.save(new User(username, encoder.encode(password)));
         LOGGER.info("Service account ({}) created", username);
     }
 

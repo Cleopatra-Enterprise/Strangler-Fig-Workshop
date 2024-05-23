@@ -1,5 +1,7 @@
 package com.ces.slc.workshop.security.web.configuration;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -10,10 +12,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.ces.slc.workshop.security.application.CustomUserDetailsService;
+import com.ces.slc.workshop.security.application.UserArgumentResolver;
 import com.ces.slc.workshop.security.application.UserRepository;
 
 @Configuration
@@ -23,8 +27,7 @@ public class BasicSecurityConfiguration implements WebMvcConfigurer {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .httpBasic(Customizer.withDefaults())
-                // TODO: Restrict to authenticated users
-                .authorizeHttpRequests(requests -> requests.anyRequest().permitAll())
+                .authorizeHttpRequests(requests -> requests.anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();
     }
@@ -51,5 +54,10 @@ public class BasicSecurityConfiguration implements WebMvcConfigurer {
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
         configurer.setUseTrailingSlashMatch(true);
+    }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(new UserArgumentResolver());
     }
 }
