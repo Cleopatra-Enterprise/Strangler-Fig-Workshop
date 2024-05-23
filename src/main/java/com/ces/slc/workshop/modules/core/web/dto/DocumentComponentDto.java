@@ -1,5 +1,10 @@
 package com.ces.slc.workshop.modules.core.web.dto;
 
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 public interface DocumentComponentDto {
 
     Long id();
@@ -13,4 +18,7 @@ public interface DocumentComponentDto {
     long cost();
 
     String currency();
+
+    @JsonInclude(Include.NON_ABSENT)
+    Set<BreakdownKeyIdentifierDto> breakdownKeys();
 }

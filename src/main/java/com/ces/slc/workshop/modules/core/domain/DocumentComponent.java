@@ -95,4 +95,8 @@ public abstract class DocumentComponent {
     public void removeBreakdownKey(BreakdownKey breakdownKey) {
         breakdownKeys.remove(breakdownKey);
     }
+
+    public void setBreakdownKeys(Set<BreakdownKey> breakdownKeys) {
+        this.breakdownKeys = breakdownKeys;
+    }
 }

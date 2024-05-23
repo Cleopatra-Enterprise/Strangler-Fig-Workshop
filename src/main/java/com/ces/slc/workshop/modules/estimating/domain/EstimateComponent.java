@@ -73,10 +73,12 @@ public class EstimateComponent extends DocumentComponent {
     }
 
     public void addChild(EstimateComponent child) {
+        child.parent = this;
         children.add(child);
     }
 
     public void removeChild(EstimateComponent child) {
+        child.parent = null;
         children.remove(child);
     }
 
