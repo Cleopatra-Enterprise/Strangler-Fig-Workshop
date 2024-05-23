@@ -3,6 +3,7 @@ package com.ces.slc.workshop.modules.core.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -18,13 +19,13 @@ public class BreakdownKey {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private BreakdownStructure structure;
 
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private BreakdownKey parent;
 
-    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<BreakdownKey> children = new HashSet<>();
 
     private String name;
@@ -86,4 +87,10 @@ public class BreakdownKey {
         children.remove(child);
     }
 
+    public void setStructure(BreakdownStructure breakdownStructure) {
+        if (this.structure != null) {
+            throw new IllegalStateException("Structure is already set");
+        }
+        this.structure = breakdownStructure;
+    }
 }

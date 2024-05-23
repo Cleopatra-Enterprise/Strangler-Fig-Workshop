@@ -1,5 +1,6 @@
 package com.ces.slc.workshop.modules.core.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ public class BreakdownStructure {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
     private BreakdownKey rootKey;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -50,5 +51,12 @@ public class BreakdownStructure {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setDocument(Document<?> document) {
+        if (this.document != null) {
+            throw new IllegalStateException("Document is already set");
+        }
+        this.document = document;
     }
 }
