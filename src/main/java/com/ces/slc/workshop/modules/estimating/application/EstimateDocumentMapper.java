@@ -1,6 +1,7 @@
 package com.ces.slc.workshop.modules.estimating.application;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import com.ces.slc.workshop.modules.core.application.document.DocumentMapper;
 import com.ces.slc.workshop.modules.estimating.domain.EstimateComponent;
@@ -13,4 +14,7 @@ public interface EstimateDocumentMapper extends DocumentMapper<
         EstimateDocument, EstimateComponent,
         EstimateDocumentDto, EstimateComponentDto> {
 
+    @Override
+    @Mapping(target = "documentId", source = "document")
+    EstimateComponentDto toComponentDto(EstimateComponent component);
 }

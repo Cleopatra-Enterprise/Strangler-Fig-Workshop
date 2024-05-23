@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 
-public class ResponseEntityUtils {
+public class ResponseEntitySupport {
 
     public static <T> ResponseEntity<T> fromOptional(Optional<T> optional) {
         return optional

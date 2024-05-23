@@ -13,7 +13,7 @@ import org.springframework.util.MultiValueMap;
 import com.ces.slc.workshop.modules.core.domain.BreakdownKey;
 import com.ces.slc.workshop.modules.core.domain.DocumentComponent;
 
-import jakarta.persistence.criteria.ListJoin;
+import jakarta.persistence.criteria.Join;
 
 public abstract class DocumentComponentSpecificationBuilder<C extends DocumentComponent> {
 
@@ -46,7 +46,7 @@ public abstract class DocumentComponentSpecificationBuilder<C extends DocumentCo
     @NonNull
     private Specification<C> hasBreakdownKeys(List<String> values) {
         return (root, query, criteriaBuilder) -> {
-            ListJoin<C, BreakdownKey> join = root.joinList("breakdownKeys");
+            Join<C, BreakdownKey> join = root.join("breakdownKeys");
             return join.get("id").in(values);
         };
     }

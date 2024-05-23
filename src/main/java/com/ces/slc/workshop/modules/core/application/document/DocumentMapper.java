@@ -21,4 +21,8 @@ public interface DocumentMapper<D extends Document<C>, C extends DocumentCompone
     default String map(User user) {
         return user.getUsername();
     }
+
+    default Long map(Document<?> document) {
+        return document.getId();
+    }
 }

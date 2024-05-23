@@ -9,7 +9,7 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class KnowledgebaseComponent extends DocumentComponent {
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private KnowledgebaseLevel level;
 
     protected KnowledgebaseComponent() {

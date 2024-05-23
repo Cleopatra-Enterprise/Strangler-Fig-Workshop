@@ -5,17 +5,14 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.ces.slc.workshop.modules.core.application.breakdown.BreakdownStructureService;
 import com.ces.slc.workshop.modules.core.domain.BreakdownStructure;
 import com.ces.slc.workshop.modules.core.domain.Document;
 import com.ces.slc.workshop.modules.core.domain.DocumentComponent;
 import com.ces.slc.workshop.modules.core.web.dto.BreakdownStructureDto;
+import com.ces.slc.workshop.modules.core.web.dto.DocumentComponentDto;
 import com.ces.slc.workshop.modules.core.web.dto.DocumentDto;
-import com.ces.slc.workshop.security.domain.CustomUserDetails;
 import com.ces.slc.workshop.security.domain.User;
 
 import jakarta.transaction.Transactional;
@@ -24,15 +21,29 @@ public abstract class AbstractDocumentService<D extends Document<C>, C extends D
 
     private final DocumentMapper<D, C, ?, ?> documentMapper;
     private final DocumentRepository<D, C> documentRepository;
+    private final DocumentComponentRepository<C> documentComponentRepository;
     private final BreakdownStructureService breakdownStructureService;
+    private final AbstractDocumentComponentService<D, C> documentComponentService;
 
     protected AbstractDocumentService(
             DocumentMapper<D, C, ?, ?> documentMapper,
             DocumentRepository<D, C> documentRepository,
-            BreakdownStructureService breakdownStructureService) {
+            DocumentComponentRepository<C> documentComponentRepository,
+            BreakdownStructureService breakdownStructureService,
+            AbstractDocumentComponentService<D, C> documentComponentService) {
         this.documentMapper = documentMapper;
         this.documentRepository = documentRepository;
+        this.documentComponentRepository = documentComponentRepository;
         this.breakdownStructureService = breakdownStructureService;
+        this.documentComponentService = documentComponentService;
+    }
+
+    public BreakdownStructureService getBreakdownStructureService() {
+        return breakdownStructureService;
+    }
+
+    public AbstractDocumentComponentService<D, C> getDocumentComponentService() {
+        return documentComponentService;
     }
 
     public List<D> getAllDocuments() {
@@ -59,15 +70,25 @@ public abstract class AbstractDocumentService<D extends Document<C>, C extends D
                 .reduce(Specification::and)
                 .orElse((root, query, criteriaBuilder) -> criteriaBuilder.conjunction());
 
-        return Optional.of(documentRepository.findAll(specification));
+        return Optional.of(Set.copyOf(documentComponentRepository.findAll(specification)));
     }
 
-    public D createDocument(DocumentDto documentDto) {
-        D document = createNewDocument(documentDto);
+    public Optional<C> addTopLevelComponent(Long id, DocumentComponentDto documentComponentDto) {
+        return documentRepository.findById(id)
+                .map(document -> {
+                    C documentComponent = documentComponentService.createDocumentComponent(document, documentComponentDto);
+                    document.addTopLevelComponent(documentComponent);
+                    documentRepository.save(document);
+                    return documentComponent;
+                });
+    }
+
+    public D createDocument(User author, DocumentDto documentDto) {
+        D document = createNewDocument(author, documentDto);
         return documentRepository.save(document);
     }
 
-    protected abstract D createNewDocument(DocumentDto documentDto);
+    protected abstract D createNewDocument(User author, DocumentDto documentDto);
 
     @Transactional
     public Optional<D> updateDocument(Long id, DocumentDto documentDto) {
@@ -96,7 +117,7 @@ public abstract class AbstractDocumentService<D extends Document<C>, C extends D
     public Optional<BreakdownStructure> addBreakdownStructure(Long id, BreakdownStructureDto breakdownStructureDto) {
         return documentRepository.findById(id)
                 .map(document -> {
-                    BreakdownStructure breakdownStructure = breakdownStructureService.createBreakdownStructure(breakdownStructureDto);
+                    BreakdownStructure breakdownStructure = breakdownStructureService.createBreakdownStructure(document, breakdownStructureDto);
                     document.addBreakdownStructure(breakdownStructure);
                     documentRepository.save(document);
                     return breakdownStructure;
@@ -110,6 +131,7 @@ public abstract class AbstractDocumentService<D extends Document<C>, C extends D
                     if (breakdownStructure.isPresent()) {
                         document.removeBreakdownStructure(breakdownStructure.get());
                         documentRepository.save(document);
+                        breakdownStructureService.deleteBreakdownStructure(breakdownStructureId);
                         return true;
                     }
                     return false;
@@ -117,15 +139,18 @@ public abstract class AbstractDocumentService<D extends Document<C>, C extends D
                 .orElse(false);
     }
 
-    protected User getCurrentUser() {
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof CustomUserDetails userDetails) {
-            return userDetails.user();
-        }
-        else {
-            throw new IllegalStateException("Could not resolve user from security context");
-        }
+    public Optional<C> getComponent(Long id, Long componentId) {
+        return documentRepository.findById(id)
+                .flatMap(document -> documentComponentService.getComponent(document, componentId));
+    }
+
+    public <CT extends DocumentComponentDto> Optional<C> updateComponent(Long id, Long componentId, CT documentComponentDto) {
+        return documentRepository.findById(id)
+                .flatMap(document -> documentComponentService.updateComponent(document, componentId, documentComponentDto));
+    }
+
+    public void deleteComponent(Long id, Long componentId) {
+        documentRepository.findById(id)
+                .ifPresent(document -> documentComponentService.deleteComponent(document, componentId));
     }
 }
