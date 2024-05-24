@@ -3,6 +3,7 @@ package com.ces.slc.workshop.modules.core.web.controller;
 import java.util.Set;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -59,5 +60,10 @@ public class BreakdownStructureController {
                 breakdownStructureService.getReferencingComponents(structureId),
                 breakdownStructureMapper::toComponentIdentifierDto
         );
+    }
+
+    @DeleteMapping("/{breakdownStructureId}")
+    public void deleteBreakdownStructure(@PathVariable Long breakdownStructureId) {
+        breakdownStructureService.deleteBreakdownStructure(breakdownStructureId);
     }
 }

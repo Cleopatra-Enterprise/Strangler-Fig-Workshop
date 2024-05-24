@@ -3,6 +3,7 @@ package com.ces.slc.workshop.modules.knowledgebase.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ public class KnowledgebaseLevel {
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     private KnowledgebaseLevel parent;
 
-    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Set<KnowledgebaseLevel> children = new HashSet<>();
 
     protected KnowledgebaseLevel() {

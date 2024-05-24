@@ -10,6 +10,7 @@ import com.ces.slc.workshop.security.domain.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class KnowledgebaseDocument extends Document<KnowledgebaseComponent> {
@@ -17,7 +18,10 @@ public class KnowledgebaseDocument extends Document<KnowledgebaseComponent> {
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<KnowledgebaseLevel> levels = new HashSet<>();
 
-    @OneToMany(mappedBy = "document", orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
+    private KnowledgebaseLevel defaultLevel;
+
+    @OneToMany(mappedBy = "document", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<KnowledgebaseComponent> topLevelComponents = new HashSet<>();
 
     protected KnowledgebaseDocument() {
@@ -48,10 +52,27 @@ public class KnowledgebaseDocument extends Document<KnowledgebaseComponent> {
     }
 
     public void addLevel(KnowledgebaseLevel level) {
-        levels.add(level);
+        if (level.getParent() == null) {
+            levels.add(level);
+        }
     }
 
     public void removeLevel(KnowledgebaseLevel level) {
-        levels.remove(level);
+        levels.removeIf(l -> l.getId().equals(level.getId()));
+    }
+
+    public KnowledgebaseLevel getDefaultLevel() {
+        return defaultLevel;
+    }
+
+    public void setDefaultLevel(KnowledgebaseLevel defaultLevel) {
+        if (this.defaultLevel != null) {
+            throw new IllegalStateException("The default level is already set");
+        }
+        if (defaultLevel.getParent() != null) {
+            throw new IllegalArgumentException("The default level cannot have a parent");
+        }
+        this.levels.add(defaultLevel);
+        this.defaultLevel = defaultLevel;
     }
 }

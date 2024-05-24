@@ -16,11 +16,24 @@ public class KnowledgebaseComponent extends DocumentComponent {
         // For JPA
     }
 
-    public KnowledgebaseComponent(KnowledgebaseLevel level) {
+    public KnowledgebaseComponent(KnowledgebaseDocument document) {
+        this(document, document.getDefaultLevel());
+    }
+
+    public KnowledgebaseComponent(KnowledgebaseDocument document, KnowledgebaseLevel level) {
+        super(document);
         this.level = level;
     }
 
     public KnowledgebaseLevel getLevel() {
         return level;
+    }
+
+    public void setLevel(KnowledgebaseLevel knowledgebaseLevel) {
+        this.level = knowledgebaseLevel;
+    }
+
+    public KnowledgebaseDocument getKnowledgebaseDocument() {
+        return (KnowledgebaseDocument) super.getDocument();
     }
 }

@@ -23,7 +23,7 @@ public class EstimateDocumentService extends AbstractDocumentService<EstimateDoc
             EstimateComponentRepository documentComponentRepository,
             BreakdownStructureService breakdownStructureService,
             EstimateComponentService estimateComponentService) {
-        super(documentMapper, documentRepository, documentComponentRepository, breakdownStructureService, estimateComponentService);
+        super(documentRepository, documentComponentRepository, breakdownStructureService, estimateComponentService);
     }
 
     @Override

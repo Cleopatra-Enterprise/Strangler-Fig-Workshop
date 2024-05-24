@@ -3,15 +3,16 @@ package com.ces.slc.workshop.modules.knowledgebase.application;
 import java.util.Set;
 
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
+import com.ces.slc.workshop.modules.core.application.document.DocumentRepository;
 import com.ces.slc.workshop.modules.estimating.domain.EstimateComponent;
 import com.ces.slc.workshop.modules.estimating.domain.EstimateDocument;
+import com.ces.slc.workshop.modules.knowledgebase.domain.KnowledgebaseComponent;
 import com.ces.slc.workshop.modules.knowledgebase.domain.KnowledgebaseDocument;
 
 @Repository
-public interface KnowledgebaseDocumentRepository extends ListCrudRepository<KnowledgebaseDocument, Long> {
+public interface KnowledgebaseDocumentRepository extends DocumentRepository<KnowledgebaseDocument, KnowledgebaseComponent> {
 
     @Query("""
     select distinct estimate

@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ces.slc.workshop.modules.core.application.document.DocumentComponentSpecificationBuilder;
 import com.ces.slc.workshop.modules.core.web.controller.AbstractDocumentComponentController;
 import com.ces.slc.workshop.modules.core.web.dto.DocumentComponentIdentifierDto;
+import com.ces.slc.workshop.modules.estimating.application.EstimateComponentSpecificationBuilder;
 import com.ces.slc.workshop.modules.estimating.application.EstimateDocumentMapper;
 import com.ces.slc.workshop.modules.estimating.application.EstimateDocumentService;
 import com.ces.slc.workshop.modules.estimating.domain.EstimateComponent;
@@ -33,7 +33,7 @@ public class EstimateDocumentComponentController extends AbstractDocumentCompone
     protected EstimateDocumentComponentController(
             EstimateDocumentService estimateDocumentService,
             EstimateDocumentMapper documentMapper,
-            DocumentComponentSpecificationBuilder<EstimateComponent> specificationBuilder) {
+            EstimateComponentSpecificationBuilder specificationBuilder) {
         super(specificationBuilder, estimateDocumentService, documentMapper);
     }
 

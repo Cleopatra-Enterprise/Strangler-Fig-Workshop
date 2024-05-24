@@ -108,10 +108,4 @@ public abstract class AbstractDocumentController<
                 breakdownStructureMapper::toStructureDto
         );
     }
-
-    @DeleteMapping("/{id}/breakdownstructures/{breakdownStructureId}")
-    public ResponseEntity<Void> deleteBreakdownStructure(@PathVariable Long id, @PathVariable Long breakdownStructureId) {
-        boolean deleted = documentService.deleteBreakdownStructure(id, breakdownStructureId);
-        return deleted ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
-    }
 }

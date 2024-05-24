@@ -80,12 +80,12 @@ public abstract class AbstractDocumentComponentController<
     }
 
     @PostMapping("/{id}/components")
-    public ResponseEntity<DocumentComponentIdentifierDto> addTopLevelComponent(
+    public ResponseEntity<DocumentComponentDto> addTopLevelComponent(
             @PathVariable Long id,
             @Valid @RequestBody CT documentComponentDto) {
         return ResponseEntitySupport.fromOptional(
                 documentService.addTopLevelComponent(id, documentComponentDto),
-                documentMapper::toComponentIdentifierDto
+                documentMapper::toComponentDto
         );
     }
 

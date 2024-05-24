@@ -19,19 +19,16 @@ import jakarta.transaction.Transactional;
 
 public abstract class AbstractDocumentService<D extends Document<C>, C extends DocumentComponent> {
 
-    private final DocumentMapper<D, C, ?, ?> documentMapper;
     private final DocumentRepository<D, C> documentRepository;
     private final DocumentComponentRepository<C> documentComponentRepository;
     private final BreakdownStructureService breakdownStructureService;
     private final AbstractDocumentComponentService<D, C> documentComponentService;
 
     protected AbstractDocumentService(
-            DocumentMapper<D, C, ?, ?> documentMapper,
             DocumentRepository<D, C> documentRepository,
             DocumentComponentRepository<C> documentComponentRepository,
             BreakdownStructureService breakdownStructureService,
             AbstractDocumentComponentService<D, C> documentComponentService) {
-        this.documentMapper = documentMapper;
         this.documentRepository = documentRepository;
         this.documentComponentRepository = documentComponentRepository;
         this.breakdownStructureService = breakdownStructureService;
@@ -44,6 +41,14 @@ public abstract class AbstractDocumentService<D extends Document<C>, C extends D
 
     public AbstractDocumentComponentService<D, C> getDocumentComponentService() {
         return documentComponentService;
+    }
+
+    public DocumentRepository<D, C> getDocumentRepository() {
+        return documentRepository;
+    }
+
+    public DocumentComponentRepository<C> getDocumentComponentRepository() {
+        return documentComponentRepository;
     }
 
     public List<D> getAllDocuments() {
