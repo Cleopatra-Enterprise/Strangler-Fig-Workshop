@@ -1,0 +1,1313 @@
+{
+	"info": {
+		"_postman_id": "3f7a3787-c752-4cbb-aec1-d540ba70c40a",
+		"name": "Strangler Fig Workshop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7493601"
+	},
+	"item": [
+		{
+			"name": "Estimates",
+			"item": [
+				{
+					"name": "Document",
+					"item": [
+						{
+							"name": "Get all estimates",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/estimate",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"estimate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get estimate by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/estimate/{{estimateId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"estimate",
+										"{{estimateId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get referenced knowledgebases for estimate by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/estimate/{{estimateId}}/knowledgebases",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"estimate",
+										"{{estimateId}}",
+										"knowledgebases"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create estimate",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"description\": \"Sample estimate with a description\",\r\n    \"name\": \"Sample estimate\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/estimate",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"estimate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update estimate",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"description\": \"Sample estimate with an updated description\",\r\n    \"name\": \"Sample updated estimate\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/estimate/{{estimateId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"estimate",
+										"{{estimateId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete estimate",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/estimate/{{estimateId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"estimate",
+										"{{estimateId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Component",
+					"item": [
+						{
+							"name": "Get all estimate components",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/estimate/{{estimateId}}/components",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"estimate",
+										"{{estimateId}}",
+										"components"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all top-level estimate components",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/estimate/{{estimateId}}/components?topLevelOnly=true",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"estimate",
+										"{{estimateId}}",
+										"components"
+									],
+									"query": [
+										{
+											"key": "topLevelOnly",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get estimate components with breakdown key",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/estimate/{{estimateId}}/components?breakdownKeys={{breakdownKeyId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"estimate",
+										"{{estimateId}}",
+										"components"
+									],
+									"query": [
+										{
+											"key": "breakdownKeys",
+											"value": "{{breakdownKeyId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get estimate component by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/estimate/{{estimateId}}/components/{{estimateComponentId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"estimate",
+										"{{estimateId}}",
+										"components",
+										"{{estimateComponentId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get estimate component children by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/estimate/{{estimateId}}/components/{{estimateComponentId}}/children",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"estimate",
+										"{{estimateId}}",
+										"components",
+										"{{estimateComponentId}}",
+										"children"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create estimate top-level component",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"referentialId\": \"TL01\",\r\n    \"description\": \"Sample top-level component\",\r\n    \"cost\": 15.00,\r\n    \"currency\": \"EUR\",\r\n    \"quantity\": 5,\r\n    \"breakdownKeys\": [\r\n        { \"breakdownStructureId\": {{breakdownStructureId}}, \"id\": {{breakdownKeyId}} }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/estimate/{{estimateId}}/components",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"estimate",
+										"{{estimateId}}",
+										"components"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create estimate component child by ID",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"referentialId\": \"CC01\",\r\n    \"description\": \"Sample child component\",\r\n    \"cost\": 41.00,\r\n    \"currency\": \"USD\",\r\n    \"quantity\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/estimate/{{estimateId}}/components/{{estimateComponentId}}/children",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"estimate",
+										"{{estimateId}}",
+										"components",
+										"{{estimateComponentId}}",
+										"children"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Import estimate top-level component from knowledgebase",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"documentId\": {{knowledgebaseId}},\r\n    \"componentId\": {{knowledgebaseComponentId}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/estimate/{{estimateId}}/components/import",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"estimate",
+										"{{estimateId}}",
+										"components",
+										"import"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Import estimate child component from knowledgebase",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"documentId\": {{knowledgebaseId}},\r\n    \"componentId\": {{knowledgebaseComponentId}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/estimate/{{estimateId}}/components/{{estimateComponentId}}/import",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"estimate",
+										"{{estimateId}}",
+										"components",
+										"{{estimateComponentId}}",
+										"import"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update estimate component by ID",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"referentialId\": \"CC01\",\r\n    \"description\": \"Sample updated component\",\r\n    \"cost\": 43.00,\r\n    \"currency\": \"USD\",\r\n    \"quantity\": 15,\r\n    \"breakdownKeys\": [\r\n        { \"id\": 2, \"breakdownStructureId\": 2 }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/estimate/{{estimateId}}/components/{{estimateComponentId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"estimate",
+										"{{estimateId}}",
+										"components",
+										"{{estimateComponentId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete estimate component by ID",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/estimate/{{estimateId}}/components/{{estimateComponentId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"estimate",
+										"{{estimateId}}",
+										"components",
+										"{{estimateComponentId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Breakdown structures",
+					"item": [
+						{
+							"name": "Get estimate breakdown structures",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/estimate/{{estimateId}}/breakdownstructures",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"estimate",
+										"{{estimateId}}",
+										"breakdownstructures"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create estimate breakdown structure",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Sample breakdown structure\",\r\n    \"rootKey\": {\r\n        \"name\": \"Sample root key\",\r\n        \"description\": \"Sample root key for BDS\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/estimate/{{estimateId}}/breakdownstructures",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"estimate",
+										"{{estimateId}}",
+										"breakdownstructures"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Knowledgebases",
+			"item": [
+				{
+					"name": "Document",
+					"item": [
+						{
+							"name": "Get all knowladgebases",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/knowledgebase",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get knowledgebase by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/knowledgebase/{{knowledgebaseId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase",
+										"{{knowledgebaseId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get knowledgebase references by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/knowledgebase/{{knowledgebaseId}}/references",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase",
+										"{{knowledgebaseId}}",
+										"references"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create knowledgebase",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"description\": \"Sample knowledgebase with a description\",\r\n    \"name\": \"Sample knowledgebase\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/knowledgebase",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update knowledgebase",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"description\": \"Sample knowledgebase with an updated description\",\r\n    \"name\": \"Sample updated knowledgebase\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/knowledgebase/{{knowledgebaseId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase",
+										"{{knowledgebaseId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete knowledgebase",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/knowledgebase/{{knowledgebaseId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase",
+										"{{knowledgebaseId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Component",
+					"item": [
+						{
+							"name": "Get knowledgebase components",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/knowledgebase/{{knowledgebaseId}}/components",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase",
+										"{{knowledgebaseId}}",
+										"components"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get knowledgebase components with breakdown key",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/knowledgebase/{{knowledgebaseId}}/components?breakdownKeys={{breakdownKeyId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase",
+										"{{knowledgebaseId}}",
+										"components"
+									],
+									"query": [
+										{
+											"key": "breakdownKeys",
+											"value": "{{breakdownKeyId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get knowledgebase components with level",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/knowledgebase/{{knowledgebaseId}}/components?levels={{levelId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase",
+										"{{knowledgebaseId}}",
+										"components"
+									],
+									"query": [
+										{
+											"key": "levels",
+											"value": "{{levelId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get knowledgebase component by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/knowledgebase/{{knowledgebaseId}}/components/{{knowledgebaseComponentId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase",
+										"{{knowledgebaseId}}",
+										"components",
+										"{{knowledgebaseComponentId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get knowledgebase component references by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/knowledgebase/{{knowledgebaseId}}/components/{{knowledgebaseComponentId}}/references",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase",
+										"{{knowledgebaseId}}",
+										"components",
+										"{{knowledgebaseComponentId}}",
+										"references"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create knowledgebase component",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"referentialId\": \"TL01\",\r\n    \"description\": \"Sample top-level component\",\r\n    \"cost\": 15.00,\r\n    \"currency\": \"EUR\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/knowledgebase/{{knowledgebaseId}}/components",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase",
+										"{{knowledgebaseId}}",
+										"components"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update knowledgebase component by ID",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"referentialId\": \"CC01\",\r\n    \"description\": \"Sample updated component\",\r\n    \"cost\": 13.00,\r\n    \"currency\": \"EUR\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/knowledgebase/{{knowledgebaseId}}/components/{{knowledgebaseComponentId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase",
+										"{{knowledgebaseId}}",
+										"components",
+										"{{knowledgebaseComponentId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete knowledgebase component by ID",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/knowledgebase/{{knowledgebaseId}}/components/{{knowledgebaseComponentId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase",
+										"{{knowledgebaseId}}",
+										"components",
+										"{{knowledgebaseComponentId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Breakdown structures",
+					"item": [
+						{
+							"name": "Get knowledgebase breakdown structures",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/knowledgebase/{{knowledgebaseId}}/breakdownstructures",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase",
+										"{{knowledgebaseId}}",
+										"breakdownstructures"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create estimate breakdown structure",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Sample breakdown structure\",\r\n    \"rootKey\": {\r\n        \"name\": \"Sample root key\",\r\n        \"description\": \"Sample root key for BDS\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/knowledgebase/{{knowledgebaseId}}/breakdownstructures",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase",
+										"{{knowledgebaseId}}",
+										"breakdownstructures"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Levels",
+					"item": [
+						{
+							"name": "Get knowledgebase levels",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/knowledgebase/{{knowledgebaseId}}/levels",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase",
+										"{{knowledgebaseId}}",
+										"levels"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get knowledgebase level by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/knowledgebase/{{knowledgebaseId}}/levels/{{levelId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase",
+										"{{knowledgebaseId}}",
+										"levels",
+										"{{levelId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get knowledgebase default level",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/knowledgebase/{{knowledgebaseId}}/levels/default",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase",
+										"{{knowledgebaseId}}",
+										"levels",
+										"default"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create knowledgebase level",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Sample level\",\r\n    \"parent\": { \"id\": 3 }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/knowledgebase/{{knowledgebaseId}}/levels",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase",
+										"{{knowledgebaseId}}",
+										"levels"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update knowledgebase level by ID",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Sample updated level\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/knowledgebase/{{knowledgebaseId}}/levels/{{levelId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase",
+										"{{knowledgebaseId}}",
+										"levels",
+										"{{levelId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete knowledgebase level by ID",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/knowledgebase/{{knowledgebaseId}}/levels/3",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"knowledgebase",
+										"{{knowledgebaseId}}",
+										"levels",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Breakdown Structures",
+			"item": [
+				{
+					"name": "Structures",
+					"item": [
+						{
+							"name": "Get breakdown structure by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/breakdownstructure/{{breakdownStructureId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"breakdownstructure",
+										"{{breakdownStructureId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get breakdown structure references by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/breakdownstructure/{{breakdownStructureId}}/references",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"breakdownstructure",
+										"{{breakdownStructureId}}",
+										"references"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update breakdown structure by ID",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Sample renamed breakdown structure\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/breakdownstructure/{{breakdownStructureId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"breakdownstructure",
+										"{{breakdownStructureId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete breakdown structure by ID",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/breakdownstructure/{{breakdownStructureId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"breakdownstructure",
+										"{{breakdownStructureId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Keys",
+					"item": [
+						{
+							"name": "Get breakdown structure root key ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/breakdownstructure/{{breakdownStructureId}}/root",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"breakdownstructure",
+										"{{breakdownStructureId}}",
+										"root"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get breakdown structure key by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/breakdownstructure/{{breakdownStructureId}}/keys/{{breakdownKeyId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"breakdownstructure",
+										"{{breakdownStructureId}}",
+										"keys",
+										"{{breakdownKeyId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get breakdown key references by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/breakdownstructure/{{breakdownStructureId}}/keys/{{breakdownStructureId}}/references",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"breakdownstructure",
+										"{{breakdownStructureId}}",
+										"keys",
+										"{{breakdownStructureId}}",
+										"references"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create breakdown child key by ID",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Sample child key\",\r\n    \"description\": \"Sample child key on level 1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/breakdownstructure/{{breakdownStructureId}}/keys/{{breakdownKeyId}}/children",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"breakdownstructure",
+										"{{breakdownStructureId}}",
+										"keys",
+										"{{breakdownKeyId}}",
+										"children"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update breakdown key by ID",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Sample renamed root key\",\r\n    \"description\": \"Sample renamed root key for BDS\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/breakdownstructure/{{breakdownStructureId}}/keys/{{breakdownKeyId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"breakdownstructure",
+										"{{breakdownStructureId}}",
+										"keys",
+										"{{breakdownKeyId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update breakdown key by ID Copy",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/breakdownstructure/{{breakdownStructureId}}/keys/{{breakdownKeyId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"breakdownstructure",
+										"{{breakdownStructureId}}",
+										"keys",
+										"{{breakdownKeyId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "aVerySecretPassword",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "sa-workshop",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "estimateId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "estimateComponentId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "breakdownStructureId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "breakdownKeyId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "knowledgebaseId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "knowledgebaseComponentId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "levelId",
+			"value": "1",
+			"type": "string"
+		}
+	]
+}
