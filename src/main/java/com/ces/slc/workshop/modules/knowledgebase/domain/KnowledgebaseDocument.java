@@ -22,7 +22,7 @@ public class KnowledgebaseDocument extends Document<KnowledgebaseComponent> {
     private KnowledgebaseLevel defaultLevel;
 
     @OneToMany(mappedBy = "document", fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<KnowledgebaseComponent> topLevelComponents = new HashSet<>();
+    private Set<KnowledgebaseComponent> components = new HashSet<>();
 
     protected KnowledgebaseDocument() {
         // For JPA
@@ -33,18 +33,18 @@ public class KnowledgebaseDocument extends Document<KnowledgebaseComponent> {
     }
 
     @Override
-    public Set<KnowledgebaseComponent> getTopLevelComponents() {
-        return Set.copyOf(topLevelComponents);
+    public Set<KnowledgebaseComponent> getComponents() {
+        return Set.copyOf(components);
     }
 
     @Override
-    public void addTopLevelComponent(KnowledgebaseComponent component) {
-        topLevelComponents.add(component);
+    public void addComponent(KnowledgebaseComponent component) {
+        components.add(component);
     }
 
     @Override
-    public void removeTopLevelComponent(KnowledgebaseComponent component) {
-        topLevelComponents.remove(component);
+    public void removeComponent(KnowledgebaseComponent component) {
+        components.remove(component);
     }
 
     public Set<KnowledgebaseLevel> getLevels() {

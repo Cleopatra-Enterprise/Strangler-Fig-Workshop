@@ -59,14 +59,14 @@ public abstract class AbstractDocumentService<D extends Document<C>, C extends D
         return documentRepository.findById(id);
     }
 
-    public Optional<Set<C>> getTopLevelComponents(Long id) {
+    public Optional<Set<C>> getComponents(Long id) {
         return documentRepository.findById(id)
-                .map(D::getTopLevelComponents);
+                .map(D::getComponents);
     }
 
-    public Optional<Set<C>> getTopLevelComponents(Long id, Set<Specification<C>> specifications) {
+    public Optional<Set<C>> getComponents(Long id, Set<Specification<C>> specifications) {
         if (specifications.isEmpty()) {
-            return getTopLevelComponents(id);
+            return getComponents(id);
         }
         if (!documentRepository.existsById(id)) {
             return Optional.empty();
@@ -78,11 +78,11 @@ public abstract class AbstractDocumentService<D extends Document<C>, C extends D
         return Optional.of(Set.copyOf(documentComponentRepository.findAll(specification)));
     }
 
-    public Optional<C> addTopLevelComponent(Long id, DocumentComponentDto documentComponentDto) {
+    public Optional<C> addComponent(Long id, DocumentComponentDto documentComponentDto) {
         return documentRepository.findById(id)
                 .map(document -> {
                     C documentComponent = documentComponentService.createDocumentComponent(document, documentComponentDto);
-                    document.addTopLevelComponent(documentComponent);
+                    document.addComponent(documentComponent);
                     documentRepository.save(document);
                     return documentComponent;
                 });

@@ -52,11 +52,11 @@ public abstract class Document<C extends DocumentComponent> {
         return author;
     }
 
-    public abstract Set<C> getTopLevelComponents();
+    public abstract Set<C> getComponents();
 
-    public abstract void addTopLevelComponent(C component);
+    public abstract void addComponent(C component);
 
-    public abstract void removeTopLevelComponent(C component);
+    public abstract void removeComponent(C component);
 
     public Set<BreakdownStructure> getBreakdownStructures() {
         return breakdownStructures;

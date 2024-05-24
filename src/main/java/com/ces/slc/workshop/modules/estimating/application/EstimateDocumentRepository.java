@@ -8,16 +8,26 @@ import org.springframework.stereotype.Repository;
 import com.ces.slc.workshop.modules.core.application.document.DocumentRepository;
 import com.ces.slc.workshop.modules.estimating.domain.EstimateComponent;
 import com.ces.slc.workshop.modules.estimating.domain.EstimateDocument;
-import com.ces.slc.workshop.modules.knowledgebase.domain.KnowledgebaseComponent;
+import com.ces.slc.workshop.modules.knowledgebase.domain.KnowledgebaseDocument;
 
 @Repository
 public interface EstimateDocumentRepository extends DocumentRepository<EstimateDocument, EstimateComponent> {
 
     @Query("""
-    select distinct component.knowledgebaseComponent
+    select distinct knowledgebase
+    from EstimateDocument estimate
+    join EstimateComponent component on component.document = estimate
+    join KnowledgebaseDocument knowledgebase on component.knowledgebaseComponent.document = knowledgebase
+    where estimate = :estimateDocument
+    and component.knowledgebaseComponent is not null
+    """)
+    Set<KnowledgebaseDocument> getKnowledgebaseReferences(EstimateDocument estimateDocument);
+
+    @Query("""
+    select component
     from EstimateDocument document
     join EstimateComponent component on component.document = document
-    where document = :estimateDocument
+    where document = :document and component.parent is null
     """)
-    Set<KnowledgebaseComponent> getKnowledgebaseReferences(EstimateDocument estimateDocument);
+    Set<EstimateComponent> getTopLevelComponents(EstimateDocument document);
 }

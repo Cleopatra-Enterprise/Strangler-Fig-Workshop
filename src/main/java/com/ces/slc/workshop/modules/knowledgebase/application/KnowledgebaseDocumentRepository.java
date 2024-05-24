@@ -19,15 +19,16 @@ public interface KnowledgebaseDocumentRepository extends DocumentRepository<Know
     from EstimateDocument estimate
     join EstimateComponent estimateComponent on estimateComponent.document = estimate
     join estimateComponent.knowledgebaseComponent knowledgebaseComponent
-    where knowledgebaseComponent = :knowledgebaseDocument
+    where knowledgebaseComponent.document = :knowledgebaseDocument
+    and estimateComponent.knowledgebaseComponent is not null
     """)
     Set<EstimateDocument> getReferencingEstimateDocuments(KnowledgebaseDocument knowledgebaseDocument);
 
     @Query("""
     select distinct estimateComponent
     from EstimateComponent estimateComponent
-    join estimateComponent.knowledgebaseComponent knowledgebaseComponent
-    where knowledgebaseComponent.document = :knowledgebaseDocument
+    where estimateComponent.knowledgebaseComponent = :knowledgebaseComponent
+    and estimateComponent.knowledgebaseComponent is not null
     """)
-    Set<EstimateComponent> getReferencingEstimateComponents(KnowledgebaseDocument knowledgebaseDocument);
+    Set<EstimateComponent> getReferencingEstimateComponents(KnowledgebaseComponent knowledgebaseComponent);
 }

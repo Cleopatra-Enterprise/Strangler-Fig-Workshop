@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.ces.slc.workshop.modules.core.application.breakdown.BreakdownStructureService;
 import com.ces.slc.workshop.modules.core.application.document.AbstractDocumentService;
 import com.ces.slc.workshop.modules.core.web.dto.DocumentDto;
+import com.ces.slc.workshop.modules.estimating.domain.EstimateComponent;
+import com.ces.slc.workshop.modules.estimating.domain.EstimateDocument;
 import com.ces.slc.workshop.modules.knowledgebase.domain.KnowledgebaseComponent;
 import com.ces.slc.workshop.modules.knowledgebase.domain.KnowledgebaseDocument;
 import com.ces.slc.workshop.modules.knowledgebase.domain.KnowledgebaseLevel;
@@ -29,6 +31,11 @@ public class KnowledgebaseDocumentService extends AbstractDocumentService<Knowle
             KnowledgebaseLevelService knowledgebaseLevelService) {
         super(documentRepository, documentComponentRepository, breakdownStructureService, documentComponentService);
         this.knowledgebaseLevelService = knowledgebaseLevelService;
+    }
+
+    @Override
+    public KnowledgebaseDocumentRepository getDocumentRepository() {
+        return (KnowledgebaseDocumentRepository) super.getDocumentRepository();
     }
 
     @Override
@@ -59,5 +66,15 @@ public class KnowledgebaseDocumentService extends AbstractDocumentService<Knowle
             getDocumentRepository().save(document);
             return knowledgebaseLevel;
         });
+    }
+
+    public Optional<Set<EstimateDocument>> getReferencingDocuments(Long id) {
+        return getDocumentById(id)
+                .map(document -> getDocumentRepository().getReferencingEstimateDocuments(document));
+    }
+
+    public Optional<Set<EstimateComponent>> getReferencingComponents(Long id, Long componentId) {
+        return getComponent(id, componentId)
+                .map(component -> getDocumentRepository().getReferencingEstimateComponents(component));
     }
 }

@@ -15,7 +15,7 @@ public interface DocumentDto {
 
     LocalDateTime creationTimestamp();
 
-    Set<DocumentComponentIdentifierDto> topLevelComponents();
+    Set<DocumentComponentIdentifierDto> components();
 
     Set<BreakdownStructureDto> breakdownStructures();
 }

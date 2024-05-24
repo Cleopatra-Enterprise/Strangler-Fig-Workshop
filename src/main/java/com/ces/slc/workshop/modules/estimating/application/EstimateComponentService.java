@@ -12,15 +12,22 @@ import com.ces.slc.workshop.modules.core.web.dto.DocumentComponentDto;
 import com.ces.slc.workshop.modules.estimating.domain.EstimateComponent;
 import com.ces.slc.workshop.modules.estimating.domain.EstimateDocument;
 import com.ces.slc.workshop.modules.estimating.web.dto.EstimateComponentDto;
+import com.ces.slc.workshop.modules.estimating.web.dto.EstimateImportComponentDto;
+import com.ces.slc.workshop.modules.knowledgebase.application.KnowledgebaseDocumentService;
+import com.ces.slc.workshop.modules.knowledgebase.domain.KnowledgebaseComponent;
 
 @Service
 public class EstimateComponentService extends AbstractDocumentComponentService<EstimateDocument, EstimateComponent> {
 
+    private final KnowledgebaseDocumentService knowledgebaseService;
+
     protected EstimateComponentService(
             EstimateComponentRepository documentComponentRepository,
-            BreakdownStructureService breakdownStructureService
+            BreakdownStructureService breakdownStructureService,
+            KnowledgebaseDocumentService knowledgebaseService
     ) {
         super(documentComponentRepository, breakdownStructureService);
+        this.knowledgebaseService = knowledgebaseService;
     }
 
     @Override
@@ -51,5 +58,32 @@ public class EstimateComponentService extends AbstractDocumentComponentService<E
             getDocumentComponentRepository().saveAll(Set.of(child, component));
             return child;
         });
+    }
+
+    public Optional<EstimateComponent> importTopLevelComponent(EstimateDocument document, EstimateImportComponentDto componentDto) {
+        return knowledgebaseService.getComponent(componentDto.documentId(), componentDto.componentId())
+                .map(knowledgebaseComponent -> {
+                    return createComponentFromKnowledgebaseComponent(document, knowledgebaseComponent);
+                });
+    }
+
+    public Optional<EstimateComponent> importComponent(EstimateDocument document, Long parentId, EstimateImportComponentDto componentDto) {
+        return knowledgebaseService.getComponent(componentDto.documentId(), componentDto.componentId())
+                .flatMap(knowledgebaseComponent -> importComponent(document, parentId, knowledgebaseComponent));
+    }
+
+    private Optional<EstimateComponent> importComponent(EstimateDocument document, Long parentId, KnowledgebaseComponent knowledgebaseComponent) {
+        return getComponent(document, parentId).map(parent -> {
+            EstimateComponent child = createComponentFromKnowledgebaseComponent(document, knowledgebaseComponent);
+            parent.addChild(child);
+            getDocumentComponentRepository().saveAll(Set.of(child, parent));
+            return child;
+        });
+    }
+
+    private EstimateComponent createComponentFromKnowledgebaseComponent(EstimateDocument document, KnowledgebaseComponent knowledgebaseComponent) {
+        EstimateComponent estimateComponent = new EstimateComponent(document, knowledgebaseComponent);
+        getDocumentComponentRepository().save(estimateComponent);
+        return estimateComponent;
     }
 }

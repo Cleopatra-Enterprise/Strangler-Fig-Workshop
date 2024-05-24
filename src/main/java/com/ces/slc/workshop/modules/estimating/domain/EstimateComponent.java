@@ -40,13 +40,6 @@ public class EstimateComponent extends DocumentComponent {
         this.parent = null;
     }
 
-    public EstimateComponent(EstimateComponent parent, KnowledgebaseComponent knowledgebaseComponent) {
-        super(parent.getDocument());
-        this.parent = parent;
-        this.knowledgebaseComponent = knowledgebaseComponent;
-        setValuesFromKnowledgebaseComponent(knowledgebaseComponent);
-    }
-
     public EstimateComponent(EstimateDocument document, KnowledgebaseComponent knowledgebaseComponent) {
         super(document);
         this.parent = null;

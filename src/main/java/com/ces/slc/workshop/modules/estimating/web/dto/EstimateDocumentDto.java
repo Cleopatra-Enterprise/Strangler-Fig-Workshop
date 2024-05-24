@@ -22,7 +22,7 @@ public record EstimateDocumentDto(
         @Size(max = 255, message = "Name must be less than 255 characters")
         String name,
 
-        Set<DocumentComponentIdentifierDto> topLevelComponents,
+        Set<DocumentComponentIdentifierDto> components,
         Set<BreakdownStructureDto> breakdownStructures
 ) implements DocumentDto {
 

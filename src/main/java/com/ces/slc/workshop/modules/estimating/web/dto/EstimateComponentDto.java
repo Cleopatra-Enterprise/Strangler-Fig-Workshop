@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.ces.slc.workshop.modules.core.web.dto.BreakdownKeyIdentifierDto;
 import com.ces.slc.workshop.modules.core.web.dto.DocumentComponentDto;
+import com.ces.slc.workshop.modules.core.web.dto.DocumentComponentIdentifierDto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -29,5 +30,6 @@ public record EstimateComponentDto(
         @Min(value = 0, message = "Quantity must be greater than or equal to 0")
         long quantity,
 
-        Set<BreakdownKeyIdentifierDto> breakdownKeys
+        Set<BreakdownKeyIdentifierDto> breakdownKeys,
+        Set<DocumentComponentIdentifierDto> children
 ) implements DocumentComponentDto { }

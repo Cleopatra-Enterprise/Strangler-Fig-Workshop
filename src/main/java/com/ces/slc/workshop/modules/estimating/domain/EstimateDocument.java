@@ -14,8 +14,8 @@ import jakarta.persistence.OneToMany;
 @Entity
 public class EstimateDocument extends Document<EstimateComponent> {
 
-    @OneToMany(mappedBy = "document", orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<EstimateComponent> topLevelComponents = new HashSet<>();
+    @OneToMany(orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<EstimateComponent> components = new HashSet<>();
 
     protected EstimateDocument() {
         // For JPA
@@ -26,17 +26,17 @@ public class EstimateDocument extends Document<EstimateComponent> {
     }
 
     @Override
-    public Set<EstimateComponent> getTopLevelComponents() {
-        return Set.copyOf(topLevelComponents);
+    public Set<EstimateComponent> getComponents() {
+        return Set.copyOf(components);
     }
 
     @Override
-    public void addTopLevelComponent(EstimateComponent component) {
-        topLevelComponents.add(component);
+    public void addComponent(EstimateComponent component) {
+        components.add(component);
     }
 
     @Override
-    public void removeTopLevelComponent(EstimateComponent component) {
-        topLevelComponents.remove(component);
+    public void removeComponent(EstimateComponent component) {
+        components.remove(component);
     }
 }

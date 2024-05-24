@@ -19,6 +19,7 @@ import com.ces.slc.workshop.modules.estimating.application.EstimateDocumentServi
 import com.ces.slc.workshop.modules.estimating.domain.EstimateComponent;
 import com.ces.slc.workshop.modules.estimating.domain.EstimateDocument;
 import com.ces.slc.workshop.modules.estimating.web.dto.EstimateComponentDto;
+import com.ces.slc.workshop.modules.estimating.web.dto.EstimateImportComponentDto;
 import com.ces.slc.workshop.support.ResponseEntitySupport;
 
 import jakarta.validation.Valid;
@@ -35,6 +36,11 @@ public class EstimateDocumentComponentController extends AbstractDocumentCompone
             EstimateDocumentMapper documentMapper,
             EstimateComponentSpecificationBuilder specificationBuilder) {
         super(specificationBuilder, estimateDocumentService, documentMapper);
+    }
+
+    @Override
+    public EstimateDocumentMapper getDocumentMapper() {
+        return (EstimateDocumentMapper) super.getDocumentMapper();
     }
 
     @GetMapping("/{id}/components/{componentId}/children")
@@ -55,6 +61,27 @@ public class EstimateDocumentComponentController extends AbstractDocumentCompone
         return ResponseEntitySupport.fromOptional(
                 getDocumentService().createComponentChild(id, componentId, componentDto),
                 getDocumentMapper()::toComponentIdentifierDto
+        );
+    }
+
+    @PostMapping("/{id}/components/import")
+    public ResponseEntity<EstimateComponentDto> importComponent(
+            @PathVariable Long id,
+            @Valid @RequestBody EstimateImportComponentDto componentDto) {
+        return ResponseEntitySupport.fromOptional(
+                getDocumentService().importTopLevelComponent(id, componentDto),
+                getDocumentMapper()::toComponentDto
+        );
+    }
+
+    @PostMapping("/{id}/components/{componentId}/import")
+    public ResponseEntity<EstimateComponentDto> importChildComponent(
+            @PathVariable Long id,
+            @PathVariable Long componentId,
+            @Valid @RequestBody EstimateImportComponentDto componentDto) {
+        return ResponseEntitySupport.fromOptional(
+                getDocumentService().importComponent(id, componentId, componentDto),
+                getDocumentMapper()::toComponentDto
         );
     }
 

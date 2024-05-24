@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ces.slc.workshop.modules.core.application.breakdown.BreakdownStructureMapper;
 import com.ces.slc.workshop.modules.core.web.controller.AbstractDocumentController;
+import com.ces.slc.workshop.modules.core.web.dto.DocumentIdentifierDto;
 import com.ces.slc.workshop.modules.knowledgebase.application.KnowledgebaseDocumentMapper;
 import com.ces.slc.workshop.modules.knowledgebase.application.KnowledgebaseDocumentService;
 import com.ces.slc.workshop.modules.knowledgebase.application.KnowledgebaseLevelMapper;
@@ -65,6 +66,14 @@ public class KnowledgebaseDocumentController extends AbstractDocumentController<
         return ResponseEntitySupport.fromOptional(
                 getDocumentService().createLevel(id, levelDto),
                 levelMapper::toLevelIdentifierDto
+        );
+    }
+
+    @GetMapping("/{id}/references")
+    public ResponseEntity<Set<DocumentIdentifierDto>> getReferencingDocuments(@PathVariable Long id) {
+        return ResponseEntitySupport.fromOptionalCollection(
+                getDocumentService().getReferencingDocuments(id),
+                getDocumentMapper()::toDocumentIdentifierDto
         );
     }
 }

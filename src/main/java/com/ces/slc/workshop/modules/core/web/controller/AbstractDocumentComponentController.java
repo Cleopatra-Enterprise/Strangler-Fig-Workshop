@@ -53,7 +53,7 @@ public abstract class AbstractDocumentComponentController<
             @RequestParam(required = false) MultiValueMap<String, String> queryParameters) {
         Set<Specification<C>> specifications = specificationBuilder.buildSpecifications(id, queryParameters);
         return ResponseEntitySupport.fromOptionalCollection(
-                documentService.getTopLevelComponents(id, specifications),
+                documentService.getComponents(id, specifications),
                 documentMapper::toComponentIdentifierDto
         );
     }
@@ -80,11 +80,11 @@ public abstract class AbstractDocumentComponentController<
     }
 
     @PostMapping("/{id}/components")
-    public ResponseEntity<DocumentComponentDto> addTopLevelComponent(
+    public ResponseEntity<DocumentComponentDto> addComponent(
             @PathVariable Long id,
             @Valid @RequestBody CT documentComponentDto) {
         return ResponseEntitySupport.fromOptional(
-                documentService.addTopLevelComponent(id, documentComponentDto),
+                documentService.addComponent(id, documentComponentDto),
                 documentMapper::toComponentDto
         );
     }
