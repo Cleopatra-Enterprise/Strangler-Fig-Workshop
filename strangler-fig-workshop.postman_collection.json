@@ -259,7 +259,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"referentialId\": \"TL01\",\r\n    \"description\": \"Sample top-level component\",\r\n    \"cost\": 15.00,\r\n    \"currency\": \"EUR\",\r\n    \"quantity\": 5,\r\n    \"breakdownKeys\": [\r\n        { \"breakdownStructureId\": {{breakdownStructureId}}, \"id\": {{breakdownKeyId}} }\r\n    ]\r\n}",
+									"raw": "{\r\n    \"referentialId\": \"TL01\",\r\n    \"description\": \"Sample top-level component\",\r\n    \"cost\": 39.00,\r\n    \"currency\": \"USD\",\r\n    \"quantity\": 3,\r\n    \"breakdownKeys\": [\r\n        { \"breakdownStructureId\": {{breakdownStructureId}}, \"id\": {{breakdownKeyId}} }\r\n    ]\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -465,6 +465,55 @@
 										"estimate",
 										"{{estimateId}}",
 										"breakdownstructures"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Total calculation",
+					"item": [
+						{
+							"name": "Calculate complete totals",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/estimate/{{estimateId}}/total",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"estimate",
+										"{{estimateId}}",
+										"total"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Calculate complete totals for breakdown key",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/estimate/{{estimateId}}/total?breakdownKeys={{breakdownKeyId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"estimate",
+										"{{estimateId}}",
+										"total"
+									],
+									"query": [
+										{
+											"key": "breakdownKeys",
+											"value": "{{breakdownKeyId}}"
+										}
 									]
 								}
 							},
