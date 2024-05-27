@@ -1,0 +1,19 @@
+server:
+  port: 8081
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: estimating
+          uri: http://localhost:8080
+          predicates:
+            - Path=/estimate
+        - id: knowledgebase
+          uri: http://localhost:8080
+          predicates:
+            - Path=/knowledgebase
+        - id: common
+          uri: http://localhost:8080
+          predicates:
+            - Path=/**
