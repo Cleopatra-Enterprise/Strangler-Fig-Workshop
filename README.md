@@ -39,7 +39,8 @@ The application is a Spring Boot application that uses Spring Data JPA to intera
 
 The application also has a dedicated `security` module that contains the security configuration for the application. The security module is shared across all other modules.
 
-> Note: The security module is constrained to a single service account with credentials configured in the `application.properties` file. The Postman collection below is pre-configured with these credentials.
+> [!NOTE]
+> The security module is constrained to a single service account with credentials configured in the `application.properties` file. The Postman collection below is pre-configured with these credentials.
 
 Each module is organized into three main packages:
 - `domain`: Contains the entities that represent the domain of the module.
@@ -58,7 +59,8 @@ You are free to design the services in any way you see fit, as long as the end r
 
 ![Service-based architecture](./strangler-fig-workshop-service-based-architecture.png)
 
-> Note that the diagram is just an example of how the services could be divided. You are free to design the services in any way you see fit. The UI is not part of the migration, so you don't need to worry about how a UI will interact with the services. You can use the Postman collection to test the services.
+> [!NOTE]
+> The diagram is just an example of how the services could be divided. You are free to design the services in any way you see fit. The UI is not part of the migration, so you don't need to worry about how a UI will interact with the services. You can use the Postman collection to test the services.
 
 ### Deliverables
 To complete the workshop, you need to deliver the following:
@@ -103,7 +105,8 @@ After setting up the databse, you need to make two changes to the application:
 
 ### Spring Cloud Gateway
 
-> Note that you are not required to use Spring Cloud Gateway in the workshop. It's just a suggestion for how you could route requests to the services.
+> [!NOTE]
+> You are not required to use Spring Cloud Gateway in the workshop. It's just a suggestion for how you could route requests to the services.
 
 - [Spring Cloud Gateway documentation](https://docs.spring.io/spring-security/reference/)
 - [Spring Cloud Gateway tutorial, Baeldung](https://www.baeldung.com/spring-cloud-gateway)
