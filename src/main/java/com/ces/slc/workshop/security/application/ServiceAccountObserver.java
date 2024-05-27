@@ -5,10 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
-import com.ces.slc.workshop.security.domain.User;
 
 @Service
 public class ServiceAccountObserver {
@@ -21,36 +20,31 @@ public class ServiceAccountObserver {
     @Value("${cleopatra.admin.password}")
     private String password;
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder encoder;
+    private final CustomUserDetailsService userDetailsManager;
 
-    public ServiceAccountObserver(UserRepository userRepository, PasswordEncoder encoder) {
-        this.userRepository = userRepository;
-        this.encoder = encoder;
+    public ServiceAccountObserver(CustomUserDetailsService userDetailsService) {
+        this.userDetailsManager = userDetailsService;
     }
 
     @EventListener(ApplicationStartedEvent.class)
     public void onApplicationStarted() {
-        userRepository.getUserByUsername(username)
-                        .ifPresentOrElse(
-                                this::updateServiceAccountIfChanged,
-                                this::createServiceAccount
-                        );
+        if (userDetailsManager.userExists(username)) {
+            UserDetails userDetails = userDetailsManager.loadUserByUsername(username);
+            boolean updated = userDetailsManager.updatePasswordIfChanged(userDetails, password);
+            if (updated) {
+                LOGGER.info("Service account password updated");
+            }
+        }
+        else {
+            createServiceAccount();
+        }
     }
 
     private void createServiceAccount() {
-        userRepository.save(new User(username, encoder.encode(password)));
-        LOGGER.info("Service account ({}) created", username);
-    }
-
-    private void updateServiceAccountIfChanged(User user) {
-        if (!encoder.matches(user.getPassword(), password)) {
-            user.setPassword(encoder.encode(password));
-            userRepository.save(user);
-            LOGGER.info("Service account ({}) updated", username);
-        }
-        else {
-            LOGGER.info("Service account ({}) unchanged", username);
-        }
+        UserDetails details = User.withUsername(username)
+                .password(password)
+                .build();
+        userDetailsManager.createUser(details);
+        LOGGER.info("Service account created with username: {}", username);
     }
 }
