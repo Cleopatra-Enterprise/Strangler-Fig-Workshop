@@ -39,6 +39,8 @@ The application is a Spring Boot application that uses Spring Data JPA to intera
 
 The application also has a dedicated `security` module that contains the security configuration for the application. The security module is shared across all other modules.
 
+> Note: The security module is constrained to a single service account with credentials configured in the `application.properties` file. The Postman collection below is pre-configured with these credentials.
+
 Each module is organized into three main packages:
 - `domain`: Contains the entities that represent the domain of the module.
 - `service`: Contains the services that interact with the entities, either directly as repositories, or indirectly as other services.
@@ -69,6 +71,7 @@ You can deliver the source code in any way you see fit. You can either fork this
 
 ### Bonus
 If you want to go the extra mile, you can also investigate some of the following:
+- Implementing a service for authentication and authorization (e.g. using Spring Security connected to Keycloak)
 - Implementing a monitoring solution for the services (e.g. Prometheus and Grafana)
 - Implementing a logging solution for the services (e.g. ELK stack)
 - Dockerizing the services, and setting up a CI/CD pipeline to deploy the services to a Kubernetes cluster
