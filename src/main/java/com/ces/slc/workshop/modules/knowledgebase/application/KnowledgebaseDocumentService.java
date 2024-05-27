@@ -22,7 +22,7 @@ public class KnowledgebaseDocumentService extends AbstractDocumentService<Knowle
 
     private final KnowledgebaseLevelService knowledgebaseLevelService;
 
-    protected KnowledgebaseDocumentService(
+    public KnowledgebaseDocumentService(
             KnowledgebaseDocumentMapper documentMapper,
             KnowledgebaseDocumentRepository documentRepository,
             KnowledgebaseComponentRepository documentComponentRepository,
@@ -36,6 +36,11 @@ public class KnowledgebaseDocumentService extends AbstractDocumentService<Knowle
     @Override
     public KnowledgebaseDocumentRepository getDocumentRepository() {
         return (KnowledgebaseDocumentRepository) super.getDocumentRepository();
+    }
+
+    @Override
+    public KnowledgebaseComponentRepository getDocumentComponentRepository() {
+        return (KnowledgebaseComponentRepository) super.getDocumentComponentRepository();
     }
 
     @Override
@@ -75,6 +80,6 @@ public class KnowledgebaseDocumentService extends AbstractDocumentService<Knowle
 
     public Optional<Set<EstimateComponent>> getReferencingComponents(Long id, Long componentId) {
         return getComponent(id, componentId)
-                .map(component -> getDocumentRepository().getReferencingEstimateComponents(component));
+                .map(component -> getDocumentComponentRepository().getReferencingEstimateComponents(component));
     }
 }

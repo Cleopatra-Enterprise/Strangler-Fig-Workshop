@@ -15,7 +15,7 @@ public class KnowledgebaseComponentService extends AbstractDocumentComponentServ
 
     private final KnowledgebaseLevelService knowledgebaseLevelService;
 
-    protected KnowledgebaseComponentService(
+    public KnowledgebaseComponentService(
             KnowledgebaseComponentRepository documentComponentRepository,
             BreakdownStructureService breakdownStructureService,
             KnowledgebaseLevelService knowledgebaseLevelService) {

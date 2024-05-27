@@ -29,7 +29,7 @@ public class KnowledgebaseDocumentController extends AbstractDocumentController<
 
     private final KnowledgebaseLevelMapper levelMapper;
 
-    protected KnowledgebaseDocumentController(
+    public KnowledgebaseDocumentController(
             KnowledgebaseDocumentService documentService,
             KnowledgebaseDocumentMapper documentMapper,
             BreakdownStructureMapper breakdownStructureMapper, KnowledgebaseLevelMapper levelMapper) {

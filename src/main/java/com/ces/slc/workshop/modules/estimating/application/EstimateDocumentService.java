@@ -19,8 +19,7 @@ import com.ces.slc.workshop.security.domain.User;
 @Service
 public class EstimateDocumentService extends AbstractDocumentService<EstimateDocument, EstimateComponent> {
 
-    protected EstimateDocumentService(
-            EstimateDocumentMapper documentMapper,
+    public EstimateDocumentService(
             EstimateDocumentRepository documentRepository,
             EstimateComponentRepository documentComponentRepository,
             BreakdownStructureService breakdownStructureService,

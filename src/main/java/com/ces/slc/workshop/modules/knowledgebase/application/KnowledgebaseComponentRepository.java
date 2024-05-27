@@ -15,8 +15,8 @@ public interface KnowledgebaseComponentRepository extends DocumentComponentRepos
     @Query("""
     select distinct estimateComponent
     from EstimateComponent estimateComponent
-    join estimateComponent.knowledgebaseComponent knowledgebaseComponent
-    where knowledgebaseComponent = :knowledgebaseComponent
+    where estimateComponent.knowledgebaseComponent = :knowledgebaseComponent
+    and estimateComponent.knowledgebaseComponent is not null
     """)
     Set<EstimateComponent> getReferencingEstimateComponents(KnowledgebaseComponent knowledgebaseComponent);
 }

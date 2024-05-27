@@ -22,7 +22,7 @@ import com.ces.slc.workshop.support.ResponseEntitySupport;
 @RequestMapping("/knowledgebase")
 public class KnowledgebaseDocumentComponentController extends AbstractDocumentComponentController<KnowledgebaseDocument, KnowledgebaseComponent, KnowledgebaseComponentDto> {
 
-    protected KnowledgebaseDocumentComponentController(
+    public KnowledgebaseDocumentComponentController(
             KnowledgebaseComponentSpecificationBuilder specificationBuilder,
             KnowledgebaseDocumentService documentService,
             KnowledgebaseDocumentMapper documentMapper) {

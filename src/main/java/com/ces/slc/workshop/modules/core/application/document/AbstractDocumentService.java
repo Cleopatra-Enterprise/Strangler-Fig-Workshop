@@ -129,21 +129,6 @@ public abstract class AbstractDocumentService<D extends Document<C>, C extends D
                 });
     }
 
-    public boolean deleteBreakdownStructure(Long id, Long breakdownStructureId) {
-        return documentRepository.findById(id)
-                .map(document -> {
-                    Optional<BreakdownStructure> breakdownStructure = breakdownStructureService.getBreakdownStructure(breakdownStructureId);
-                    if (breakdownStructure.isPresent()) {
-                        document.removeBreakdownStructure(breakdownStructure.get());
-                        documentRepository.save(document);
-                        breakdownStructureService.deleteBreakdownStructure(breakdownStructureId);
-                        return true;
-                    }
-                    return false;
-                })
-                .orElse(false);
-    }
-
     public Optional<C> getComponent(Long id, Long componentId) {
         return documentRepository.findById(id)
                 .flatMap(document -> documentComponentService.getComponent(document, componentId));

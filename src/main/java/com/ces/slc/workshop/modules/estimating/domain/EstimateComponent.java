@@ -30,11 +30,6 @@ public class EstimateComponent extends DocumentComponent {
         // For JPA
     }
 
-    public EstimateComponent(EstimateComponent parent) {
-        super(parent.getDocument());
-        this.parent = parent;
-    }
-
     public EstimateComponent(EstimateDocument document) {
         super(document);
         this.parent = null;

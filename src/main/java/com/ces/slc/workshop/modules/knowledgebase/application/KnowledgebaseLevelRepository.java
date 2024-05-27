@@ -1,7 +1,6 @@
 package com.ces.slc.workshop.modules.knowledgebase.application;
 
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
@@ -20,12 +19,4 @@ public interface KnowledgebaseLevelRepository extends ListCrudRepository<Knowled
     where d = :document and l.id = :id
     """)
     Optional<KnowledgebaseLevel> findByDocumentAndId(KnowledgebaseDocument document, Long id);
-
-    @Query("""
-    select l
-    from KnowledgebaseLevel l
-    join KnowledgebaseDocument d on l member of d.levels
-    where d = :document and l.parent is null
-    """)
-    Set<KnowledgebaseLevel> findByDocumentAndParentIsNull(KnowledgebaseDocument document);
 }

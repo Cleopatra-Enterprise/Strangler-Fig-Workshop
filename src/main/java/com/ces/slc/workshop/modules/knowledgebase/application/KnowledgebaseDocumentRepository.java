@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.ces.slc.workshop.modules.core.application.document.DocumentRepository;
-import com.ces.slc.workshop.modules.estimating.domain.EstimateComponent;
 import com.ces.slc.workshop.modules.estimating.domain.EstimateDocument;
 import com.ces.slc.workshop.modules.knowledgebase.domain.KnowledgebaseComponent;
 import com.ces.slc.workshop.modules.knowledgebase.domain.KnowledgebaseDocument;
@@ -23,12 +22,4 @@ public interface KnowledgebaseDocumentRepository extends DocumentRepository<Know
     and estimateComponent.knowledgebaseComponent is not null
     """)
     Set<EstimateDocument> getReferencingEstimateDocuments(KnowledgebaseDocument knowledgebaseDocument);
-
-    @Query("""
-    select distinct estimateComponent
-    from EstimateComponent estimateComponent
-    where estimateComponent.knowledgebaseComponent = :knowledgebaseComponent
-    and estimateComponent.knowledgebaseComponent is not null
-    """)
-    Set<EstimateComponent> getReferencingEstimateComponents(KnowledgebaseComponent knowledgebaseComponent);
 }

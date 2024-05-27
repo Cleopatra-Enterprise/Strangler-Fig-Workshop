@@ -21,7 +21,7 @@ public class EstimateComponentService extends AbstractDocumentComponentService<E
 
     private final KnowledgebaseDocumentService knowledgebaseService;
 
-    protected EstimateComponentService(
+    public EstimateComponentService(
             EstimateComponentRepository documentComponentRepository,
             BreakdownStructureService breakdownStructureService,
             KnowledgebaseDocumentService knowledgebaseService

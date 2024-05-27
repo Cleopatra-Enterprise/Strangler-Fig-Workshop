@@ -31,7 +31,7 @@ public class EstimateDocumentComponentController extends AbstractDocumentCompone
         EstimateDocument, EstimateComponent,
         EstimateComponentDto> {
 
-    protected EstimateDocumentComponentController(
+    public EstimateDocumentComponentController(
             EstimateDocumentService estimateDocumentService,
             EstimateDocumentMapper documentMapper,
             EstimateComponentSpecificationBuilder specificationBuilder) {

@@ -36,11 +36,6 @@ public class BreakdownKey {
         // For JPA and MapStruct
     }
 
-    public BreakdownKey(String name, BreakdownStructure structure) {
-        this.name = name;
-        this.structure = structure;
-    }
-
     public BreakdownKey(String name, BreakdownKey parent) {
         this.name = name;
         this.parent = parent;
