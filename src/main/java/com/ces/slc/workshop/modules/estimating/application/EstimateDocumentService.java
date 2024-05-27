@@ -1,9 +1,13 @@
 package com.ces.slc.workshop.modules.estimating.application;
 
 import java.time.LocalDateTime;
+import java.util.Currency;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.ces.slc.workshop.modules.core.application.breakdown.BreakdownStructureService;
@@ -76,5 +80,21 @@ public class EstimateDocumentService extends AbstractDocumentService<EstimateDoc
 
     public Optional<Set<KnowledgebaseDocument>> getReferencedKnowledgebases(Long id) {
         return getDocumentById(id).map(document -> getDocumentRepository().getKnowledgebaseReferences(document));
+    }
+
+    public Optional<EstimateTotalCalculationResult> calculateTotals(Long id, Set<Specification<EstimateComponent>> specifications) {
+        Optional<Set<EstimateComponent>> componentsForCalculation = getComponents(id, specifications);
+        return componentsForCalculation.flatMap(components -> {
+            return getDocumentById(id).map(document -> calculateTotals(document, components));
+        });
+    }
+
+    private EstimateTotalCalculationResult calculateTotals(EstimateDocument document, Set<EstimateComponent> components) {
+        Map<Currency, Long> componentTotals = components.stream()
+                .collect(Collectors.toMap(
+                        EstimateComponent::getCurrency,
+                        component -> component.getCost() * component.getQuantity(),
+                        Long::sum));
+        return new EstimateTotalCalculationResult(document, componentTotals);
     }
 }
