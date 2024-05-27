@@ -73,6 +73,7 @@ public abstract class AbstractDocumentController<
     }
 
     @PostMapping
+    // Note: User is resolved using com.ces.slc.workshop.security.application.UserArgumentResolver
     public DocumentDto createDocument(@RequestBody T documentDto, User author) {
         return documentMapper.toDocumentDto(documentService.createDocument(author, documentDto));
     }

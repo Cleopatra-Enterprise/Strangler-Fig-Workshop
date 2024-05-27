@@ -7,6 +7,7 @@ This is a workshop to learn how to use the Strangler Fig pattern to migrate a mo
   - [The application structure](#the-application-structure)
 - [Postman collection](#postman-collection)
 - [The goal](#the-goal)
+  - [Game plan](#game-plan) 
   - [Deliverables](#deliverables)
   - [Bonus](#bonus)
 - [Prerequisites](#prerequisites)
@@ -55,12 +56,21 @@ The collection contains a configuration with component IDs which are commonly re
 ## The goal
 The goal of the workshop is to migrate the application to a service-based architecture using the Strangler Fig pattern. Once the migration is complete, the application should be divided into individually deployable services that can be scaled independently. The services should be accessible through a gateway that routes requests to the appropriate service. 
 
-You are free to design the services in any way you see fit, as long as the end result is a service-based architecture. A basic example of how the services could be divided is shown in the diagram below.
+You are free to design the services in any way you see fit, as long as the end result is a service-based architecture with _minimal code duplication_. A basic example of how the services could be divided is shown in the diagram below.
 
 ![Service-based architecture](./strangler-fig-workshop-service-based-architecture.png)
 
 > [!NOTE]
 > The diagram is just an example of how the services could be divided. You are free to design the services in any way you see fit. The UI is not part of the migration, so you don't need to worry about how a UI will interact with the services. You can use the Postman collection to test the services.
+
+### Game plan
+To help you get started, you can consider the following steps to migrate the application. Make sure to consider _why_ you're making the changes you're making, and how they fit into the Strangler Fig pattern.
+- Consider where you can split the application into services, and how they can interact with each other
+- Create a separate Maven module for each service you want to create
+  - Consider how to share common elements between services, a lot of code in the `core` package is likely to be shared between services
+- Set up a gateway service that routes requests to the appropriate service
+  - Consider where to handle authentication and authorization, and how to propagate the user's identity to the services (e.g. by using a JWT token)
+- Migrate the modules to the appropriate service
 
 ### Deliverables
 To complete the workshop, you need to deliver the following:
@@ -85,7 +95,11 @@ Note that these are optional, and you are not required to implement them to comp
 To participate in this workshop using Docker, you only need to have Docker installed on your computer. You can download Docker from [here](https://www.docker.com/products/docker-desktop). Once you've installed Docker, the application will automatically set up the necessary infrastructure for you.
 
 ### Option B: Local development environment
-To participate in this workshop using a local environment, you only need to have a computer with SQL Server installed. You can use the free developer version of SQL Server, which is SQL Server Developer. You can download it from [here](https://www.microsoft.com/en-us/sql-server/sql-server-downloads).
+
+> [!NOTE]
+> SQL Server is a recommendation for this workshop, but you can use any SQL database you're comfortable with (e.g. MySQL).
+
+To participate in this workshop using a local environment, you only need to have a computer with SQL Server installed. You can use the free developer version of SQL Server, which is SQL Server Developer. You can download SQL Server from [here](https://www.microsoft.com/en-us/sql-server/sql-server-downloads), and SQL Server Management Studio (SSMS) from [here](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16#download-ssms).
 
 Once you've installed SQL Server, open SQL Server Management Studio (SSMS) and create a new database called `stranglerfig`. You can do this by right-clicking on the `Databases` node in the Object Explorer, selecting `New Database`, and entering `stranglerfig` as the database name. You can leave the rest of the settings as default.
 
