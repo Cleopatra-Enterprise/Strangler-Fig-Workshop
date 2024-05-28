@@ -66,10 +66,15 @@ You are free to design the services in any way you see fit, as long as the end r
 ### Game plan
 To help you get started, you can consider the following steps to migrate the application. Make sure to consider _why_ you're making the changes you're making, and how they fit into the Strangler Fig pattern.
 - Consider where you can split the application into services, and how they can interact with each other
+  - Split along domain boundaries, and consider how the services can interact with each other
+  - Remember that the application consists of at least three modules: `core`, `knowledgebase`, and `estimating`
 - Create a separate Maven module for each service you want to create
+  - You can use the existing `application` and `gateway` modules as a starting point
   - Consider how to share common elements between services, a lot of code in the `core` package is likely to be shared between services
-- Set up a gateway service that routes requests to the appropriate service
+- Set up the gateway service that routes requests to the appropriate service
   - Consider where to handle authentication and authorization, and how to propagate the user's identity to the services (e.g. by using a JWT token)
+  - The provided `gateway` module is a starting point for the gateway service
+  - Refer to the [Useful resources](#useful-resources) section for more information on Spring Cloud Gateway
 - Migrate the modules to the appropriate service
 
 ### Deliverables
@@ -107,6 +112,11 @@ After setting up the databse, you need to make two changes to the application:
 1. If you're not using the default Service Account (`sa`) to connect to the database, you need to update the `application.properties` file in the `src/main/resources` folder to use your credentials. You can find the file [here](src/main/resources/application.properties).
 2. You need to disable Docker Compose integration in the `pom.xml` file. To do so, comment out the `spring-boot-docker-compose` dependency. You can find the file [here](pom.xml).
 
+### Useful extra tools
+- [Postman](https://www.postman.com/downloads/): A tool to test APIs
+- [Code with Me](https://www.jetbrains.com/code-with-me/): A tool to collaborate on code in real-time using IntelliJ-based IDEs
+- [Draw.io](https://app.diagrams.net/): A tool to create diagrams
+
 ## Useful resources
 ### Strangler Fig pattern
 - [Strangler Fig Application, Martin Fowler](https://martinfowler.com/bliki/StranglerFigApplication.html)
@@ -120,7 +130,8 @@ After setting up the databse, you need to make two changes to the application:
 ### Spring Cloud Gateway
 
 > [!NOTE]
-> You are not required to use Spring Cloud Gateway in the workshop. It's just a suggestion for how you could route requests to the services.
+> You are not required to use Spring Cloud Gateway in the workshop. It's just a suggestion for how you could route requests to the services. The provided `gateway` module is a starting point for the gateway service using Spring Cloud Gateway.
 
 - [Spring Cloud Gateway documentation](https://docs.spring.io/spring-security/reference/)
 - [Spring Cloud Gateway tutorial, Baeldung](https://www.baeldung.com/spring-cloud-gateway)
+- [Building a Gateway, Spring Guides (GitHub)](https://github.com/spring-guides/gs-gateway/)
