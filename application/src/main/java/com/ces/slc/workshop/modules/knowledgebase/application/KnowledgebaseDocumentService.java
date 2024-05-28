@@ -23,7 +23,6 @@ public class KnowledgebaseDocumentService extends AbstractDocumentService<Knowle
     private final KnowledgebaseLevelService knowledgebaseLevelService;
 
     public KnowledgebaseDocumentService(
-            KnowledgebaseDocumentMapper documentMapper,
             KnowledgebaseDocumentRepository documentRepository,
             KnowledgebaseComponentRepository documentComponentRepository,
             BreakdownStructureService breakdownStructureService,

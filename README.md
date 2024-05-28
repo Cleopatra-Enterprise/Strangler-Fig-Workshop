@@ -56,6 +56,9 @@ To help you test the application, we've created a Postman collection that contai
 
 The collection contains a configuration with component IDs which are commonly re-used in the requests. You can find the configuration in the `Variables` tab in the collection. Authorization is also configured in the collection, so you don't need to worry about setting up the authorization headers.
 
+> [!NOTE]
+> There is no sample data in the database, so you need to create the data you need to test the application. You can use the `POST` requests in the collection to create the data you need.
+
 ## The goal
 The goal of the workshop is to migrate the application to a service-based architecture using the Strangler Fig pattern. Once the migration is complete, the application should be divided into individually deployable services that can be scaled independently. The services should be accessible through a gateway that routes requests to the appropriate service. 
 
@@ -75,19 +78,23 @@ To help you get started, you can consider the following steps to migrate the app
   - You can use the existing `application` and `gateway` modules as a starting point
   - Consider how to share common elements between services, a lot of code in the `core` package is likely to be shared between services
 - Set up the gateway service that routes requests to the appropriate service
-  - Consider where to handle authentication and authorization, and how to propagate the user's identity to the services (e.g. by using a JWT token)
+  - You can re-use the existing authentication across services, or set up a separate authentication service
+    - Note: The former is likely to be simpler, keep time constraints in mind 
   - The provided `gateway` module is a starting point for the gateway service
   - Refer to the [Useful resources](#useful-resources) section for more information on Spring Cloud Gateway
 - Migrate the modules to the appropriate service
 
+> [!NOTE]
+> If you identify parts of the application that cannot be migrated using the existing API design, you are free to change the API design to better fit the service-based architecture. Just make sure to document the changes you make. You do not need to consider backwards compatibility with the existing monolithic application.
+
 ### Deliverables
 To complete the workshop, you need to deliver the following:
 1. The source code of the resulting services.
-2. A brief description of the services and how they interact with each other.
-3. A diagram showing the services and how they interact with each other.
+2. A diagram showing the services and how they interact with each other. 
+3. A brief description of the services and how they interact with each other.
 4. A brief description how you applied Strangler Fig in the migration.
 
-You can deliver the source code in any way you see fit. You can either fork this repository and commit the changes to your fork, or you can create a new repository with the source code. The other deliverables can be delivered as text files or images in the repository you created.
+You can deliver the source code in any way you see fit. You can either fork this repository and commit the changes to your fork, or you can create a new repository with the source code. Deliverables 3 and 4 can be presented at the end of the workshop, you don't have to deliver these in written form.
 
 ### Bonus
 If you want to go the extra mile, you can also investigate some of the following:
