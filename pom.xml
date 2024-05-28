@@ -40,7 +40,12 @@
 
     <modules>
         <!-- HINT: Add modules here when adding new services -->
-        <module>application</module>
         <module>gateway</module>
+        <module>service-parent</module>
+
+        <module>shared</module>
+        <module>knowledgebase</module>
+        <module>estimating</module>
+        <module>breakdownstructures</module>
     </modules>
 </project>

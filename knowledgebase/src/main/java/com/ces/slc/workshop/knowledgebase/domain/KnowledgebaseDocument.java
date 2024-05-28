@@ -1,0 +1,78 @@
+package com.ces.slc.workshop.knowledgebase.domain;
+
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.ces.slc.workshop.shared.domain.Document;
+import com.ces.slc.workshop.security.domain.User;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+
+@Entity
+public class KnowledgebaseDocument extends Document<KnowledgebaseComponent> {
+
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<KnowledgebaseLevel> levels = new HashSet<>();
+
+    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
+    private KnowledgebaseLevel defaultLevel;
+
+    @OneToMany(mappedBy = "document", fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<KnowledgebaseComponent> components = new HashSet<>();
+
+    protected KnowledgebaseDocument() {
+        // For JPA
+    }
+
+    public KnowledgebaseDocument(String description, User author, LocalDateTime creationTimestamp) {
+        super(description, author, creationTimestamp);
+    }
+
+    @Override
+    public Set<KnowledgebaseComponent> getComponents() {
+        return Set.copyOf(components);
+    }
+
+    @Override
+    public void addComponent(KnowledgebaseComponent component) {
+        components.add(component);
+    }
+
+    @Override
+    public void removeComponent(KnowledgebaseComponent component) {
+        components.remove(component);
+    }
+
+    public Set<KnowledgebaseLevel> getLevels() {
+        return levels;
+    }
+
+    public void addLevel(KnowledgebaseLevel level) {
+        if (level.getParent() == null) {
+            levels.add(level);
+        }
+    }
+
+    public void removeLevel(KnowledgebaseLevel level) {
+        levels.removeIf(l -> l.getId().equals(level.getId()));
+    }
+
+    public KnowledgebaseLevel getDefaultLevel() {
+        return defaultLevel;
+    }
+
+    public void setDefaultLevel(KnowledgebaseLevel defaultLevel) {
+        if (this.defaultLevel != null) {
+            throw new IllegalStateException("The default level is already set");
+        }
+        if (defaultLevel.getParent() != null) {
+            throw new IllegalArgumentException("The default level cannot have a parent");
+        }
+        this.levels.add(defaultLevel);
+        this.defaultLevel = defaultLevel;
+    }
+}

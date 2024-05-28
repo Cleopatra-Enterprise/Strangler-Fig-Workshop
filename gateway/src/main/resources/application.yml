@@ -1,10 +1,10 @@
 server:
-  port: 8081
+  port: 8080
 
 services:
-  estimating: http://localhost:8080
-  knowledgebase: http://localhost:8080
-  common: http://localhost:8080
+  estimating: http://localhost:8081
+  knowledgebase: http://localhost:8082
+  breakdown: http://localhost:8083
 
 spring:
   cloud:
@@ -18,8 +18,7 @@ spring:
           uri: ${services.knowledgebase}
           predicates:
             - Path=/knowledgebase
-        # HINT: Do you see the problem here?
-        - id: common
-          uri: ${services.common}
+        - id: breakdown
+          uri: ${services.breakdown}
           predicates:
-            - Path=/**
+            - Path=/breakdownstructure
