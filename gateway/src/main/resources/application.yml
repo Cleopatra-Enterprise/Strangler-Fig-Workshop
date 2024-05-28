@@ -1,19 +1,25 @@
 server:
   port: 8081
 
+services:
+  estimating: http://localhost:8080
+  knowledgebase: http://localhost:8080
+  common: http://localhost:8080
+
 spring:
   cloud:
     gateway:
       routes:
         - id: estimating
-          uri: http://localhost:8080
+          uri: ${services.estimating}
           predicates:
             - Path=/estimate
         - id: knowledgebase
-          uri: http://localhost:8080
+          uri: ${services.knowledgebase}
           predicates:
             - Path=/knowledgebase
+        # HINT: Do you see the problem here?
         - id: common
-          uri: http://localhost:8080
+          uri: ${services.common}
           predicates:
             - Path=/**

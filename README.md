@@ -33,6 +33,9 @@ In the diagram below, you can see the entities in the application and their rela
 ![Entities](./strangler-fig-workshop-entities.png)
 
 ### The application structure
+> [!IMPORTANT]
+> Several packages contain a `package-info.java` file. This file is used to document the package, and contains several hints that may help you understand the package and its relationship to other packages.
+
 The application is a Spring Boot application that uses Spring Data JPA to interact with a SQL Server database. The application is divided modules, each representing a different part of the application. The modules are:
 - `core`: Contains shared elements of the application, such as common entities and repositories.
 - `estimating`: Contains the functionality related to estimates.

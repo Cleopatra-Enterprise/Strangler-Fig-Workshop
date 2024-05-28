@@ -9,12 +9,6 @@ import org.springframework.http.ResponseEntity;
 
 public class ResponseEntitySupport {
 
-    public static <T> ResponseEntity<T> fromOptional(Optional<T> optional) {
-        return optional
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
     public static <T, D> ResponseEntity<D> fromOptional(Optional<T> optional, Function<T, D> dtoMapper) {
         return optional
                 .map(dtoMapper)

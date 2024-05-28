@@ -20,6 +20,7 @@
     </properties>
 
     <dependencies>
+        <!-- Common for all projects, see application/pom.xml and gateway/pom.xml for project specific dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -38,6 +39,7 @@
     </build>
 
     <modules>
+        <!-- HINT: Add modules here when adding new services -->
         <module>application</module>
         <module>gateway</module>
     </modules>
