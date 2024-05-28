@@ -1,14 +1,10 @@
 package com.ces.slc.workshop.estimating;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import com.ces.slc.workshop.AbstractServiceStarter;
 
-@SpringBootApplication(scanBasePackages = "com.ces.slc.workshop")
-@EntityScan("com.ces.slc.workshop")
-public class EstimatingServiceApplication {
+public class EstimatingServiceApplication extends AbstractServiceStarter {
 
     public static void main(String[] args) {
-        SpringApplication.run(EstimatingServiceApplication.class, args);
+        start(EstimatingServiceApplication.class, args);
     }
 }
