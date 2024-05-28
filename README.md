@@ -102,6 +102,7 @@ If you want to go the extra mile, you can also investigate some of the following
 - Implementing a monitoring solution for the services (e.g. Prometheus and Grafana)
 - Implementing a logging solution for the services (e.g. ELK stack)
 - Dockerizing the services, and setting up a CI/CD pipeline to deploy the services to a Kubernetes cluster
+- Optimizing query performance in the services (see logged queries in the console)
 
 Note that these are optional, and you are not required to implement them to complete the workshop. If you have ideas for other things you'd like to investigate, feel free to do so!
 
